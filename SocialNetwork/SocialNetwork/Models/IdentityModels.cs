@@ -32,6 +32,16 @@ namespace SocialNetwork.Models
         {
         }
 
+        public DbSet<Subscriptions> Subscriptions { get; set; }
+
+        public DbSet<Communities> Communities { get; set; }
+
+        public DbSet<Editor> Editors { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

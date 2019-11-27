@@ -130,3 +130,7 @@ C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\Soci
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.csproj.CopyComplete
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.dll
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.pdb
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.InitialCreate.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.csproj.GenerateResource.cache
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Communities.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.BaseEntities.resources
