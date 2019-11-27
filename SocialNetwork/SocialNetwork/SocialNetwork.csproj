@@ -221,8 +221,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostInfo.cs" />
     <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Models\Subscriptions.cs" />
+    <Compile Include="Models\UserPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -290,6 +292,7 @@
     <Content Include="Views\Communities\Details.cshtml" />
     <Content Include="Views\Communities\Edit.cshtml" />
     <Content Include="Views\Communities\Index.cshtml" />
+    <Content Include="Views\Communities\Userpage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
