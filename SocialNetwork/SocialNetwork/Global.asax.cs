@@ -16,6 +16,16 @@ namespace SocialNetwork
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Запретить все страницы
+            RegisterGlobalFilters(GlobalFilters.Filters);
+        }
+
+        //Запретить все страницы
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+            filters.Add(new System.Web.Mvc.AuthorizeAttribute());
         }
     }
 }
