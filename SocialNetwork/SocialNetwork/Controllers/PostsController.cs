@@ -182,7 +182,7 @@ namespace SocialNetwork.Controllers
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Posts", new { id = post.PostId });
             }
             return View(post);
         }
@@ -210,7 +210,7 @@ namespace SocialNetwork.Controllers
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Community", "Communities", new { ComId = post.CommunityId });
         }
 
         protected override void Dispose(bool disposing)
