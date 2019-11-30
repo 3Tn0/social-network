@@ -1,0 +1,76 @@
+﻿@model SocialNetwork.Models.CommunityPageViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Community";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>
+                @Model.CommunityName
+            </h2>
+        </div>
+        <div class="col-sm-6">
+            @if (Model.isAdmin)
+            {
+
+            <h3>
+                @Html.ActionLink(" ", "Edit", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-pencil" })
+                @Html.ActionLink(" ", "Delete", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-remove" })
+            </h3>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<a href="/Communities/Subscribers?ComId=@Model.CommunityId" class="btn btn-info">Подписчики</a>
+
+@if (Model.isAdmin)
+{
+<a href="/Communities/Editors?ComId=@Model.CommunityId" class="btn btn-info">Редакторы</a>
+}
+
+
+@if (!Model.isSubscriber)
+{
+<a href="/Subscriptions/Subscribe?ComId=@Model.CommunityId" class="btn btn-success">Подписаться</a>
+}
+
+@if (Model.isSubscriber)
+{
+<a href="/Subscriptions/Unsubscribe?ComId=@Model.CommunityId" class="btn btn-light">Отписаться</a>
+}
+
+<div class="container">
+
+    <h2>Новости</h2>
+
+    @if (Model.isEditor)
+    {
+    <a href="/Posts/Create?ComId=@Model.CommunityId" class="btn btn-default">Добавить запись</a>
+    }
+
+    @foreach (var item in Model.News)
+    {
+    <div class="row">
+        <div>
+            <hr />
+            <h4>
+                @Html.ActionLink(item.CommunityName, "Community", new { ComId = item.CommunityId })
+            </h4>
+            <p>
+                @item.Text
+            </p>
+            <div><span class="text-muted">@item.AuthorLN @item.AuthorFN написал @item.CreationDate</span></div>
+
+            <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+        </div>
+    </div>
+    }
+</div>

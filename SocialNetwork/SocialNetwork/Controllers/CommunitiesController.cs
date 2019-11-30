@@ -179,6 +179,93 @@ namespace SocialNetwork.Controllers
         }
 
 
+        public ActionResult Community(Guid ComId)
+        {
+            var db = new ApplicationDbContext();
+            var userId = Guid.Parse(User.Identity.GetUserId());
+
+            CommunityPageViewModel CommunityPage = new CommunityPageViewModel();
+
+            var q = from Com in db.Communities
+                    where Com.CommunityId == ComId
+                    select new
+                    {
+                        Name = Com.Name
+                    };
+
+            CommunityPage.CommunityName = q.First().Name;
+
+            CommunityPage.CommunityId = ComId;
+
+
+            var news = (from p in db.Posts
+                        join c in db.Communities on p.CommunityId equals c.CommunityId
+                        join ed in db.Editors on p.RightsId equals ed.EditorRightsId
+                        join u in db.Users on ed.UserId.ToString() equals u.Id
+                        where p.CommunityId == ComId
+                        select new
+                        {
+                            p.PostId,
+                            p.CreationDate,
+                            p.Text,
+                            p.CommunityId,
+                            c.Name,
+                            u.LastName,
+                            u.FirstName
+                        }).ToList();
+
+            CommunityPage.News = new List<PostInfo>();
+
+            foreach (var item in news)
+            {
+                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text };
+                CommunityPage.News.Add(one);
+            }
+
+
+            var e = from Ed in db.Editors
+                    where Ed.CommunityId == ComId &&
+                    Ed.CancellationDate == null
+                    select new
+                    {
+                        EdId = Ed.UserId
+                    };
+
+            CommunityPage.isEditor = false;
+
+            foreach (var item in e)
+            {
+                if (item.EdId == Guid.Parse(User.Identity.GetUserId()))
+                    CommunityPage.isEditor = true;
+            }
+
+            var s = from Sub in db.Subscriptions
+                    where Sub.CommunityId == ComId &&
+                    Sub.UserId == userId &&
+                    Sub.SubscriptionCancelationDate == null
+                    select Sub;
+
+            CommunityPage.isSubscriber = false;
+
+            if (s.Count() != 0)
+                CommunityPage.isSubscriber = true;
+
+
+            var isA = from c in db.Communities
+                      where c.CommunityId == ComId &&
+                      c.UserId == userId
+                      select c;
+
+            CommunityPage.isAdmin = false;
+
+            if (isA.Count() != 0)
+                CommunityPage.isAdmin = true;
+
+
+            return View(CommunityPage);
+        }
+
+
         [HttpGet]
         public ActionResult All()
         {

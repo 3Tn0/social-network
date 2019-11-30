@@ -218,6 +218,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Communities.cs" />
+    <Compile Include="Models\CommunityPageViewModel.cs" />
     <Compile Include="Models\Editor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -298,6 +299,7 @@
     <Content Include="Views\Communities\Subscriptions.cshtml" />
     <Content Include="Views\Communities\Administration.cshtml" />
     <Content Include="Views\Communities\All.cshtml" />
+    <Content Include="Views\Communities\Community.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
