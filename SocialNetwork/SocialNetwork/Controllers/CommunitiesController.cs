@@ -174,6 +174,52 @@ namespace SocialNetwork.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult All()
+        {
+
+            using (var db = new ApplicationDbContext())
+            {
+
+
+
+                List<Communities> Coms = new List<Communities>();
+
+
+                Coms = (from c in db.Communities
+                        select c).ToList();
+
+                return View(Coms);
+            }
+
+
+        }
+
+
+        [HttpPost]
+        public ActionResult All(string Filter)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                //List<Communities> Coms = new List<Communities>();
+
+
+                var Coms = (from c in db.Communities
+                            select c);
+
+                if (!String.IsNullOrEmpty(Filter))
+                {
+                    Coms = Coms.Where(s => s.Name.Contains(Filter));
+                }
+
+                return View(Coms.ToList());
+
+
+            }
+        }
+
+
         // GET: Communities/Edit/5
         public ActionResult Edit(Guid? id)
         {

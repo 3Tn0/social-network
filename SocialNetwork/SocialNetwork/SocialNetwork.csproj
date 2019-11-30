@@ -297,6 +297,7 @@
     <Content Include="Views\Communities\Userpage.cshtml" />
     <Content Include="Views\Communities\Subscriptions.cshtml" />
     <Content Include="Views\Communities\Administration.cshtml" />
+    <Content Include="Views\Communities\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
