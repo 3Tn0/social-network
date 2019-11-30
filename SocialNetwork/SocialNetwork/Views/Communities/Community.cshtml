@@ -39,12 +39,12 @@
 
 @if (!Model.isSubscriber)
 {
-<a href="/Subscriptions/Subscribe?ComId=@Model.CommunityId" class="btn btn-success">Подписаться</a>
+<a href="/Communities/Subscribe?ComId=@Model.CommunityId" class="btn btn-success">Подписаться</a>
 }
 
 @if (Model.isSubscriber)
 {
-<a href="/Subscriptions/Unsubscribe?ComId=@Model.CommunityId" class="btn btn-light">Отписаться</a>
+<a href="/Communities/Unsubscribe?ComId=@Model.CommunityId" class="btn btn-light">Отписаться</a>
 }
 
 <div class="container">

@@ -533,5 +533,38 @@ namespace SocialNetwork.Controllers
 
         }
 
+
+        public ActionResult Subscribe(Guid ComId)
+        {
+            Subscriptions Sub = new Subscriptions();
+
+            Sub.CommunityId = ComId;
+            Sub.SubscriptionDate = DateTime.Now;
+            Sub.SubscriptionId = Guid.NewGuid();
+            Sub.UserId = Guid.Parse(User.Identity.GetUserId());
+
+            db.Subscriptions.Add(Sub);
+            db.SaveChanges();
+
+            return RedirectToAction("Community", "Communities", new { ComId });
+        }
+
+        public ActionResult Unsubscribe(Guid ComId)
+        {
+            Guid UserId = Guid.Parse(User.Identity.GetUserId());
+
+
+            Subscriptions Sub = (from s in db.Subscriptions
+                                 where s.CommunityId == ComId &&
+                                 UserId == s.UserId &&
+                                 s.SubscriptionCancelationDate == null
+                                 select s).First();
+
+            db.Entry(Sub).Entity.SubscriptionCancelationDate = DateTime.Now;
+            db.SaveChanges();
+
+            return RedirectToAction("Community", "Communities", new { ComId });
+        }
+
     }
 }
