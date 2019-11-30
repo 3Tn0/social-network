@@ -149,6 +149,31 @@ namespace SocialNetwork.Controllers
         }
 
 
+        //Администрирование
+        public ActionResult Administration(int page = 1)
+        {
+            var db = new ApplicationDbContext();
+            var userId = Guid.Parse(User.Identity.GetUserId());
+
+
+            //List<Communities> communities = (db.Communities
+            //            .Where(c => c.UserId == userId)
+            //            .Select(c => c)).ToList();
+
+            List<Communities> communities = (from c in db.Communities
+                                             join e in db.Editors on c.CommunityId equals e.CommunityId
+                                             where (e.UserId == userId && e.CancellationDate == null) || (c.UserId == userId)
+                                             select c).Distinct().ToList();
+
+
+            int pageSize = 10; // количество объектов на страницу
+            IEnumerable<Communities> phonesPerPages = communities.Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = communities.Count };
+            IndexViewModel1 ivm = new IndexViewModel1 { PageInfo = pageInfo, Communities = phonesPerPages };
+            return View(ivm);
+        }
+
+
         // GET: Communities/Edit/5
         public ActionResult Edit(Guid? id)
         {

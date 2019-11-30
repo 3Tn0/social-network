@@ -1,0 +1,29 @@
+﻿@model SocialNetwork.Models.IndexViewModel1
+@using SocialNetwork.Helpers
+
+@{
+    ViewBag.Title = "Administration";
+}
+
+<table class="table">
+    <tr>
+        <td><h2>@Html.ActionLink("Мои подписки", "Subscriptions", new { /* id=item.PrimaryKey */ })</h2></td>
+        <td><h2><u>@Html.ActionLink("Управление", "Administration", new { /* id=item.PrimaryKey */ })</u></h2></td>
+        <td>
+            <h2><a href="All" class="btn btn-default">Все сообщества</a></h2>
+        </td>
+        <td>
+            <h2><a href="Create" class="btn btn-default">Создать сообщество</a></h2>
+        </td>
+    </tr>
+    @foreach (var item in Model.Communities)
+    {
+        <tr>
+            <td><h4>@Html.ActionLink(item.Name, "Community", new { ComId = item.CommunityId })</h4></td>
+        </tr>
+    }
+</table>
+<br />
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Administration", new { page = x }))
+</div>
