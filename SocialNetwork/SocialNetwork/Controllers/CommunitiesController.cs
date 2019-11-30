@@ -426,6 +426,45 @@ namespace SocialNetwork.Controllers
             }
         }
 
+
+        public ActionResult Addeditor(Guid ComId, Guid UserId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                Editor Ed = new Editor();
+
+                Ed.UserId = UserId;
+                Ed.CommunityId = ComId;
+                Ed.AppointmentDate = DateTime.Now;
+                Ed.EditorRightsId = Guid.NewGuid();
+
+                db.Editors.Add(Ed);
+                db.SaveChanges();
+
+                return RedirectToAction("Subscribers", "Communities", new { ComId });
+
+            }
+        }
+
+        public ActionResult Deleteeditor(Guid ComId, Guid UserId)
+        {
+
+            using (var db = new ApplicationDbContext())
+            {
+                Editor Ed = (from e in db.Editors
+                             where e.UserId == UserId &&
+                             e.CommunityId == ComId &&
+                             e.CancellationDate == null
+                             select e).First();
+
+                db.Entry(Ed).Entity.CancellationDate = DateTime.Now;
+                db.SaveChanges();
+
+                return RedirectToAction("Subscribers", "Communities", new { ComId });
+            }
+        }
+
         public ActionResult Edit(Guid? id)
         {
             var db = new ApplicationDbContext();
