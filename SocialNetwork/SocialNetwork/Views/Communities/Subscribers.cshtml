@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SocialNetwork.Models.Subscriber>
+
+@{
+    ViewBag.Title = "Subscribers";
+}
+
+<h2>Подписчики</h2>
+
+<table class="table">
+
+    @if (ViewBag.IsAdmin)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                @if (!item.isEditor)
+                {
+                    <td>
+                        @Html.ActionLink(" ", "Addeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-ok" })
+                        <span>Добавить редактора</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink(" ", "Deleteeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-remove" })
+                        <span>Удалить редактора</span>
+                    </td>
+                }
+            </tr>
+        }
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+            </tr>
+        }
+    }
+
+
+</table>

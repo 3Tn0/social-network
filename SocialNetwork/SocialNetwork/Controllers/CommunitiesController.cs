@@ -312,6 +312,120 @@ namespace SocialNetwork.Controllers
         }
 
 
+        public ActionResult Subscribers(Guid ComId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+
+
+                //*************************
+                //var Subs = from s in db.Subscriptions
+                //           join u in db.Users on s.UserId.ToString() equals u.Id
+                //           where s.CommunityId == ComId &&
+                //           s.SubscriptionCancelationDate == null
+                //           select u;
+                //           return View(Subs.ToList());
+                //************************
+
+
+
+
+                //var Subs = from s in db.Subscriptions
+                //           join u in db.Users on s.UserId.ToString() equals u.Id
+                //           join e in db.Editors on u.Id equals e.UserId.ToString() into gj
+                //           from sube in gj.DefaultIfEmpty()
+                //           where s.CommunityId == ComId &&
+                //           s.SubscriptionCancelationDate == null &&
+                //           sube.CancellationDate == null
+                //           select new
+                //           {
+                //               u.Id,
+                //               u.FirstName,
+                //               u.LastName,
+                //               sube.
+                //           };
+
+
+                var Subs = (from s in db.Subscriptions
+                            join u in db.Users on s.UserId.ToString() equals u.Id
+                            where s.CommunityId == ComId &&
+                            s.SubscriptionCancelationDate == null
+                            select u).ToList();
+
+                List<Subscriber> Subscribers = new List<Subscriber>();
+
+                foreach (var item in Subs)
+                {
+
+                    var isE = from e in db.Editors
+                              where e.CommunityId == ComId &&
+                              e.UserId.ToString() == item.Id &&
+                              e.CancellationDate == null
+                              select e;
+                    if (isE.Count() == 0)
+                    {
+                        Subscriber Sub = new Subscriber { FirstName = item.FirstName, LastName = item.LastName, isEditor = false, UserId = Guid.Parse(item.Id) };
+                        Subscribers.Add(Sub);
+                    }
+                    else
+                    {
+                        Subscriber Sub = new Subscriber { FirstName = item.FirstName, LastName = item.LastName, isEditor = true, UserId = Guid.Parse(item.Id) };
+                        Subscribers.Add(Sub);
+                    }
+                }
+
+                Guid Uid = Guid.Parse(User.Identity.GetUserId());
+
+                var isA = from c in db.Communities
+                          where c.CommunityId == ComId &&
+                          c.UserId == Uid
+                          select c;
+
+                if (isA.Count() == 0)
+                { ViewBag.IsAdmin = false; }
+                else
+                { ViewBag.IsAdmin = true; }
+
+                ViewBag.ComId = ComId;
+
+
+                return View(Subscribers);
+
+            }
+
+        }
+
+
+        public ActionResult Editors(Guid ComId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                var Ed = (from e in db.Editors
+                          join u in db.Users on e.UserId.ToString() equals u.Id
+                          where e.CommunityId == ComId &&
+                          e.CancellationDate == null
+                          select u).ToList();
+
+                List<Subscriber> Editors = new List<Subscriber>();
+
+                foreach (var item in Ed)
+                {
+
+                    Subscriber Sub = new Subscriber { FirstName = item.FirstName, LastName = item.LastName, isEditor = true, UserId = Guid.Parse(item.Id) };
+                    Editors.Add(Sub);
+                }
+
+                Guid Uid = Guid.Parse(User.Identity.GetUserId());
+
+                ViewBag.ComId = ComId;
+
+
+                return View(Editors);
+            }
+        }
+
         // GET: Communities/Edit/5
         public ActionResult Edit(Guid? id)
         {
