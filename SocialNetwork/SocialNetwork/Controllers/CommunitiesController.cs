@@ -112,6 +112,43 @@ namespace SocialNetwork.Controllers
         }
 
 
+        //Подписки
+
+        public ActionResult Subscriptions(int page = 1)
+        {
+            var db = new ApplicationDbContext();
+            var userId = Guid.Parse(User.Identity.GetUserId());
+
+
+            List<Communities> communities = new List<Communities>();
+
+
+            var select = from Sub in db.Subscriptions
+                         join Com in db.Communities on Sub.CommunityId equals Com.CommunityId
+                         where Sub.SubscriptionCancelationDate == null &&
+                         Sub.UserId == userId
+                         select new
+                         {
+                             Id = Com.CommunityId,
+                             Name = Com.Name,
+                             Date = Com.CreationDate,
+                             User = Com.UserId
+                         };
+
+            foreach (var item in select)
+            {
+                var comunity = new Communities { CommunityId = item.Id, UserId = item.User, CreationDate = item.Date, Name = item.Name };
+                communities.Add(comunity);
+            }
+
+            int pageSize = 10; // количество объектов на страницу
+            IEnumerable<Communities> phonesPerPages = communities.Skip((page - 1) * pageSize).Take(pageSize);
+            PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = communities.Count };
+            IndexViewModel1 ivm = new IndexViewModel1 { PageInfo = pageInfo, Communities = phonesPerPages };
+            return View(ivm);
+        }
+
+
         // GET: Communities/Edit/5
         public ActionResult Edit(Guid? id)
         {

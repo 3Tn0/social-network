@@ -201,6 +201,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Migrations\201911270430239_InitialCreate.cs" />
     <Compile Include="Migrations\201911270430239_InitialCreate.Designer.cs">
       <DependentUpon>201911270430239_InitialCreate.cs</DependentUpon>
@@ -220,6 +221,7 @@
     <Compile Include="Models\Editor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MyCommunitiesViewModels.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PostInfo.cs" />
     <Compile Include="Models\Subscriber.cs" />
@@ -293,6 +295,7 @@
     <Content Include="Views\Communities\Edit.cshtml" />
     <Content Include="Views\Communities\Index.cshtml" />
     <Content Include="Views\Communities\Userpage.cshtml" />
+    <Content Include="Views\Communities\Subscriptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
