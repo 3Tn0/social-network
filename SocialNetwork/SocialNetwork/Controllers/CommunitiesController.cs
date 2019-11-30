@@ -36,28 +36,33 @@ namespace SocialNetwork.Controllers
             return View(communities);
         }
 
-        // GET: Communities/Create
+        //Страница создания сообщества
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Communities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommunityId,CreationDate,Name,UserId")] Communities communities)
+        public ActionResult Create(MyCommunitiesViewModels model)
         {
             if (ModelState.IsValid)
             {
-                communities.CommunityId = Guid.NewGuid();
-                db.Communities.Add(communities);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(communities);
+                var community = new Communities { CommunityId = Guid.NewGuid(), CreationDate = DateTime.Now, Name = model.Name, UserId = Guid.Parse(User.Identity.GetUserId()) };
+
+                var editor = new Editor { EditorRightsId = Guid.NewGuid(), AppointmentDate = DateTime.Now, CommunityId = community.CommunityId, UserId = Guid.Parse(User.Identity.GetUserId()) };
+
+                var db = new ApplicationDbContext();
+
+                db.Communities.Add(community);
+                db.Editors.Add(editor);
+
+                db.SaveChanges();
+
+
+                return Redirect("/Communities/Administration");
+            }
+            return Redirect("/Communities/Administration");
         }
 
 
