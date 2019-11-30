@@ -426,9 +426,10 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        // GET: Communities/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            var db = new ApplicationDbContext();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -441,25 +442,32 @@ namespace SocialNetwork.Controllers
             return View(communities);
         }
 
-        // POST: Communities/Edit/5
+        // POST: Communities1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CommunityId,CreationDate,Name,UserId")] Communities communities)
         {
+            var db = new ApplicationDbContext();
+
             if (ModelState.IsValid)
             {
                 db.Entry(communities).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Community", "Communities", new { ComId = communities.CommunityId });
             }
             return View(communities);
         }
 
-        // GET: Communities/Delete/5
+
+
+
         public ActionResult Delete(Guid? id)
         {
+            var db = new ApplicationDbContext();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -472,24 +480,19 @@ namespace SocialNetwork.Controllers
             return View(communities);
         }
 
-        // POST: Communities/Delete/5
+        // POST: Communities1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
+            var db = new ApplicationDbContext();
+
             Communities communities = db.Communities.Find(id);
             db.Communities.Remove(communities);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Administration", "Communities");
+
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
