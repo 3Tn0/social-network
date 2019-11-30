@@ -225,6 +225,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyCommunitiesViewModels.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostDetailViewModel.cs" />
     <Compile Include="Models\PostInfo.cs" />
     <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Models\Subscriptions.cs" />
