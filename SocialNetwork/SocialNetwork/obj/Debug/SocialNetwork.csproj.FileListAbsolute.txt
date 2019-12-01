@@ -134,3 +134,5 @@ C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\Soci
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.csproj.GenerateResource.cache
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Communities.resources
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.BaseEntities.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Chat.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Chatadded.resources

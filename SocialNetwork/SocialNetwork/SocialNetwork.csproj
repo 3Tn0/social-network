@@ -215,8 +215,17 @@
     <Compile Include="Migrations\201911270555229_BaseEntities.Designer.cs">
       <DependentUpon>201911270555229_BaseEntities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912010537570_Chat.cs" />
+    <Compile Include="Migrations\201912010537570_Chat.Designer.cs">
+      <DependentUpon>201912010537570_Chat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912010540335_Chat added.cs" />
+    <Compile Include="Migrations\201912010540335_Chat added.Designer.cs">
+      <DependentUpon>201912010540335_Chat added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Communities.cs" />
     <Compile Include="Models\CommunityPageViewModel.cs" />
@@ -335,6 +344,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911270555229_BaseEntities.resx">
       <DependentUpon>201911270555229_BaseEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912010537570_Chat.resx">
+      <DependentUpon>201912010537570_Chat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912010540335_Chat added.resx">
+      <DependentUpon>201912010540335_Chat added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

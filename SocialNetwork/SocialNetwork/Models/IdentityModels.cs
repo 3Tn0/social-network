@@ -42,6 +42,8 @@ namespace SocialNetwork.Models
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Chat> Chats { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
