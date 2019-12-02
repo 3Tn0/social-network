@@ -137,3 +137,5 @@ C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\Soci
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Chat.resources
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Chatadded.resources
 C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Fix.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Friendship.resources
+C:\Users\vvs100\Desktop\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.Migrations.Friendship1.resources

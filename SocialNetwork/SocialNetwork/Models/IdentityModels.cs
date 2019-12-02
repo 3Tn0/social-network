@@ -44,9 +44,12 @@ namespace SocialNetwork.Models
 
         public DbSet<Chat> Chats { get; set; }
 
+        public DbSet<Friendship> Friendships { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
     }
 }

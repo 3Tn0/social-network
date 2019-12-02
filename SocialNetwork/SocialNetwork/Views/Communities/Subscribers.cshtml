@@ -14,7 +14,8 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)
+                    @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
+                    @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
                 </td>
                 @if (!item.isEditor)
                 {
@@ -39,7 +40,8 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)
+                    @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
+                    @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
                 </td>
             </tr>
         }
