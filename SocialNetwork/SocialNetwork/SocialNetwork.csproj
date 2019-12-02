@@ -334,6 +334,7 @@
     <Content Include="Views\Userpage\Index.cshtml" />
     <Content Include="Views\Userpage\Id.cshtml" />
     <Content Include="Views\Userpage\Friends.cshtml" />
+    <Content Include="Views\Userpage\Applications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,7 +5,12 @@
     ViewBag.Title = "Friends";
 }
 
-<h2>Friends</h2>
+<table class="table">
+    <tr>
+        <td><h2><u>@Html.ActionLink("Друзья", "Friends")</u></h2></td>
+        <td><h2>@Html.ActionLink("Заявки", "Applications")</h2></td>
+    </tr>
+</table>
 
 <form action="Friends" method="post" class="navbar-form navbar-left" role="search">
     <div class="form-group">
@@ -32,6 +37,9 @@
         <tr>
             <td>
                 @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", new { id = item.Id })
+            </td>
+            <td>
+                <a href="/Userpage/Deletefriendfriends?id=@item.Id" class="btn btn-light">Удалить из друзей</a>
             </td>
         </tr>
     }

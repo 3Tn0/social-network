@@ -181,6 +181,20 @@ namespace SocialNetwork.Controllers
             return RedirectToAction("Id", "Userpage", new { id });
         }
 
+        public ActionResult Confirmfriendapplications(Guid id)
+        {
+            Guid currentUser = Guid.Parse(User.Identity.GetUserId());
+            var Friendship = db.Friendships
+                            .Where(c => (c.applicantId == id && c.aimPersonId == currentUser) || (c.applicantId == currentUser && c.aimPersonId == id))
+                            .Select(c => c);
+            Friendship.First().friendshipAccepted = true;
+
+            db.Entry(Friendship.First()).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Applications", "Userpage");
+        }
+
         public ActionResult Deletefriend(Guid id)
         {
             Guid currentUser = Guid.Parse(User.Identity.GetUserId());
@@ -196,6 +210,39 @@ namespace SocialNetwork.Controllers
 
             return RedirectToAction("Id", "Userpage", new { id });
         }
+
+        public ActionResult Deletefriendfriends(Guid id)
+        {
+            Guid currentUser = Guid.Parse(User.Identity.GetUserId());
+
+
+            var Friendship = db.Friendships
+                            .Where(c => (c.applicantId == id && c.aimPersonId == currentUser) || (c.applicantId == currentUser && c.aimPersonId == id))
+                            .Select(c => c);
+
+
+            db.Friendships.Remove(Friendship.First());
+            db.SaveChanges();
+
+            return RedirectToAction("Friends", "Userpage");
+        }
+
+        public ActionResult Deletefriendapplications(Guid id)
+        {
+            Guid currentUser = Guid.Parse(User.Identity.GetUserId());
+
+
+            var Friendship = db.Friendships
+                            .Where(c => (c.applicantId == id && c.aimPersonId == currentUser) || (c.applicantId == currentUser && c.aimPersonId == id))
+                            .Select(c => c);
+
+
+            db.Friendships.Remove(Friendship.First());
+            db.SaveChanges();
+
+            return RedirectToAction("Applications", "Userpage");
+        }
+
 
         public ActionResult Friends(string Filter)
         {
@@ -216,6 +263,35 @@ namespace SocialNetwork.Controllers
                 Friends2 = (from u in db.Users
                             join f1 in db.Friendships on u.Id equals f1.applicantId.ToString()
                             where f1.aimPersonId.ToString() == currentUser && f1.friendshipAccepted == true
+                            select u).ToList();
+
+                var Friends = Friends2.Union(Friends1);
+
+                if (!String.IsNullOrEmpty(Filter))
+                {
+                    Friends = Friends.Where(s => s.FirstName.Contains(Filter) || s.LastName.Contains(Filter));
+                }
+
+                return View(Friends.ToList());
+            }
+
+        }
+
+
+
+        public ActionResult Applications (string Filter)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                List<ApplicationUser> Friends1 = new List<ApplicationUser>();
+                List<ApplicationUser> Friends2 = new List<ApplicationUser>();
+
+                var currentUser = User.Identity.GetUserId();
+
+                Friends2 = (from u in db.Users
+                            join f1 in db.Friendships on u.Id equals f1.applicantId.ToString()
+                            where f1.aimPersonId.ToString() == currentUser && f1.friendshipAccepted == false
                             select u).ToList();
 
                 var Friends = Friends2.Union(Friends1);
