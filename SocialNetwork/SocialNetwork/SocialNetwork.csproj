@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\UserpageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,6 +223,10 @@
     <Compile Include="Migrations\201912010540335_Chat added.cs" />
     <Compile Include="Migrations\201912010540335_Chat added.Designer.cs">
       <DependentUpon>201912010540335_Chat added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912020631009_Fix.cs" />
+    <Compile Include="Migrations\201912020631009_Fix.Designer.cs">
+      <DependentUpon>201912020631009_Fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -306,7 +311,6 @@
     <Content Include="Views\Communities\Details.cshtml" />
     <Content Include="Views\Communities\Edit.cshtml" />
     <Content Include="Views\Communities\Index.cshtml" />
-    <Content Include="Views\Communities\Userpage.cshtml" />
     <Content Include="Views\Communities\Subscriptions.cshtml" />
     <Content Include="Views\Communities\Administration.cshtml" />
     <Content Include="Views\Communities\All.cshtml" />
@@ -318,6 +322,7 @@
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Communities\Subscribers.cshtml" />
     <Content Include="Views\Communities\Editors.cshtml" />
+    <Content Include="Views\Userpage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -350,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912010540335_Chat added.resx">
       <DependentUpon>201912010540335_Chat added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912020631009_Fix.resx">
+      <DependentUpon>201912020631009_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

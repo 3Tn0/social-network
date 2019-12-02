@@ -1,0 +1,52 @@
+﻿@model SocialNetwork.Models.UserPageViewModel
+
+@{
+    ViewBag.Title = "Userpage";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+
+
+
+            <div class="col-sm-6">
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "#")</p>
+            </div>
+
+
+            <div class="col-sm-6">
+
+                <h3>@Model.User.LastName @Model.User.FirstName</h3>
+                <p> @Model.User.Email</p>
+                <p>День рождения: @Model.User.BirthDate.ToString("dd.MM.yyyy")</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <h2>Новости</h2>
+
+    @foreach (var item in Model.News)
+    {
+        <div class="row">
+            <div>
+                <hr />
+                <h4>
+                    @Html.ActionLink(item.CommunityName, "Community", "Communities", new { ComId = item.CommunityId }, null)
+                </h4>
+                <p>
+                    @item.Text
+                </p>
+                <div><span class="text-muted">@item.AuthorLN @item.AuthorFN написал @item.CreationDate</span></div>
+
+                <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+            </div>
+        </div>
+    }
+</div>

@@ -79,7 +79,7 @@ namespace SocialNetwork.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return Redirect("/Communities/Userpage");
+                    return Redirect("/Userpage");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -163,7 +163,7 @@ namespace SocialNetwork.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
-                    return Redirect("/Communities/Userpage");
+                    return Redirect("/Userpage");
                 }
                 AddErrors(result);
             }
