@@ -210,12 +210,12 @@ namespace SocialNetwork.Controllers
 
                 Friends1 = (from u in db.Users
                             join f1 in db.Friendships on u.Id equals f1.aimPersonId.ToString()
-                            where f1.applicantId.ToString() == currentUser
+                            where f1.applicantId.ToString() == currentUser && f1.friendshipAccepted == true
                             select u).ToList();
 
                 Friends2 = (from u in db.Users
                             join f1 in db.Friendships on u.Id equals f1.applicantId.ToString()
-                            where f1.aimPersonId.ToString() == currentUser
+                            where f1.aimPersonId.ToString() == currentUser && f1.friendshipAccepted == true
                             select u).ToList();
 
                 var Friends = Friends2.Union(Friends1);
