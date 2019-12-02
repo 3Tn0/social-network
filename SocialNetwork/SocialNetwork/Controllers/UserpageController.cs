@@ -156,5 +156,38 @@ namespace SocialNetwork.Controllers
 
             return RedirectToAction("Id", "Userpage", new { id });
         }
+
+        public ActionResult Friends(string Filter)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                List<ApplicationUser> Friends1 = new List<ApplicationUser>();
+                List<ApplicationUser> Friends2 = new List<ApplicationUser>();
+
+                var currentUser = User.Identity.GetUserId();
+
+
+                Friends1 = (from u in db.Users
+                            join f1 in db.Friendships on u.Id equals f1.aimPersonId.ToString()
+                            where f1.applicantId.ToString() == currentUser
+                            select u).ToList();
+
+                Friends2 = (from u in db.Users
+                            join f1 in db.Friendships on u.Id equals f1.applicantId.ToString()
+                            where f1.aimPersonId.ToString() == currentUser
+                            select u).ToList();
+
+                var Friends = Friends2.Union(Friends1);
+
+                if (!String.IsNullOrEmpty(Filter))
+                {
+                    Friends = Friends.Where(s => s.FirstName.Contains(Filter) || s.LastName.Contains(Filter));
+                }
+
+                return View(Friends.ToList());
+            }
+
+        }
     }
 }

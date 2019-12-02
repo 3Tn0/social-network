@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<SocialNetwork.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Friends";
+}
+
+<h2>Friends</h2>
+
+<form action="Friends" method="post" class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+        <input type="text" name="Filter" class="form-control" placeholder="Найти">
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span>
+    </button>
+</form>
+
+
+@*<form asp-controller="Movies" asp-action="Index">
+        <p>
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>
+    </form>*@
+
+
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
