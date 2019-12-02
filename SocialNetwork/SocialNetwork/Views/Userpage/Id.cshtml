@@ -24,7 +24,19 @@
                 }
                 else
                 {
-                    <a href="/Userpage/Addfriend?id=@ViewBag.UserId" class="btn btn-info">Добавить в друзья</a>
+                    if (ViewBag.isApplicant)
+                    {
+                        <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-light">Отменить заявку</a>
+                    }
+                    else if (ViewBag.isAimPerson)
+                    {
+                        <a href="/Userpage/Confirmfriend?id=@ViewBag.UserId" class="btn btn-success">Принять заявку</a>
+                        <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-danger">Отклонить заявку</a>
+                    }
+                    else
+                    {
+                        <a href="/Userpage/Addfriend?id=@ViewBag.UserId" class="btn btn-info">Добавить в друзья</a>
+                    }
                 }
                 <a href="#" class="btn btn-info">Написать сообщение</a>
                 <h3>@Model.User.LastName @Model.User.FirstName</h3>

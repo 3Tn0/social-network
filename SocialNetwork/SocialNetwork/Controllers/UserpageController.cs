@@ -2,6 +2,7 @@
 using SocialNetwork.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -115,10 +116,35 @@ namespace SocialNetwork.Controllers
                         .Select(c => c);
 
 
-            if (isFriend.Count() != 0) 
-                ViewBag.isFriend = true;
+            if (isFriend.Count() != 0)
+            {
+                if (isFriend.First().friendshipAccepted)
+                {
+                    ViewBag.isFriend = true;
+                }
+                else
+                {
+                    ViewBag.isFriend = false;
+
+                    if (isFriend.First().applicantId == currentUser)
+                    {
+                        ViewBag.isApplicant = true;
+                        ViewBag.isAimPerson = false;
+                    }
+                    else
+                    {
+                        ViewBag.isAimPerson = true;
+                        ViewBag.isApplicant = false;
+                    }
+                }       
+            }
             else
+            {
                 ViewBag.isFriend = false;
+                ViewBag.isApplicant = false;
+                ViewBag.isAimPerson = false;
+            }
+                
 
             ViewBag.UserId = id;
 
@@ -136,6 +162,20 @@ namespace SocialNetwork.Controllers
             friendship.friendshipAccepted = false;
 
             db.Friendships.Add(friendship);
+            db.SaveChanges();
+
+            return RedirectToAction("Id", "Userpage", new { id });
+        }
+
+        public ActionResult Confirmfriend(Guid id)
+        {
+            Guid currentUser = Guid.Parse(User.Identity.GetUserId());
+            var Friendship = db.Friendships
+                            .Where(c => (c.applicantId == id && c.aimPersonId == currentUser) || (c.applicantId == currentUser && c.aimPersonId == id))
+                            .Select(c => c);
+            Friendship.First().friendshipAccepted = true;
+
+            db.Entry(Friendship.First()).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("Id", "Userpage", new { id });
