@@ -4,48 +4,69 @@
     ViewBag.Title = "Subscribers";
 }
 
-<h2>Подписчики</h2>
+<div class="container body-start">
+    <div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-<table class="table">
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <h4>Подписчики</h4>
 
-    @if (ViewBag.IsAdmin)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
-                    @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
-                </td>
-                @if (!item.isEditor)
-                {
-                    <td>
-                        @Html.ActionLink(" ", "Addeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-ok" })
-                        <span>Добавить редактора</span>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        @Html.ActionLink(" ", "Deleteeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-remove" })
-                        <span>Удалить редактора</span>
-                    </td>
-                }
-            </tr>
-        }
-    }
-    else
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
-                    @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
-                </td>
-            </tr>
-        }
-    }
+                    <table class="table">
+
+                        @if (ViewBag.IsAdmin)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
+                                        @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
+                                    </td>
+                                    @if (!item.isEditor)
+                                    {
+                                        <td>
+                                            @Html.ActionLink(" ", "Addeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-ok" })
+                                            <span>Добавить редактора</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @Html.ActionLink(" ", "Deleteeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-remove" })
+                                            <span>Удалить редактора</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @*@Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)*@
+                                        @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
+                                    </td>
+                                </tr>
+                            }
+                        }
 
 
-</table>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

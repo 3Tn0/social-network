@@ -4,70 +4,98 @@
     ViewBag.Title = "Id";
 }
 
-<div class="container">
-    <div class="jumbotron">
+<div class="container body-start">
+    <div>
         <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-
-
-            <div class="col-sm-6">
-                <p>@Html.ActionLink("Моя страница", "Index")</p>
-                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
-                <p>@Html.ActionLink("Мои сообщения", "#")</p>
-                <p>@Html.ActionLink("Мои друзья", "Friends")</p>
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
             </div>
-
-
-            <div class="col-sm-6">
-                @if (ViewBag.isFriend)
-                {
-                    <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-light">Удалить из друзей</a>
-                }
-                else
-                {
-                    if (ViewBag.isApplicant)
-                    {
-                        <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-light">Отменить заявку</a>
-                    }
-                    else if (ViewBag.isAimPerson)
-                    {
-                        <a href="/Userpage/Confirmfriend?id=@ViewBag.UserId" class="btn btn-success">Принять заявку</a>
-                        <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-danger">Отклонить заявку</a>
-                    }
-                    else
-                    {
-                        <a href="/Userpage/Addfriend?id=@ViewBag.UserId" class="btn btn-info">Добавить в друзья</a>
-                    }
-                }
-                <a href="#" class="btn btn-info">Написать сообщение</a>
-                <h3>@Model.User.LastName @Model.User.FirstName</h3>
-                <p> @Model.User.Email</p>
-                <p>День рождения: @Model.User.BirthDate.ToString("dd.MM.yyyy")</p>
+            <div class="col-sm-3">
+                <div class="jumbotron">
+                    <img src="https://www.stomatolog3.ru/wp-content/themes/stomatologia/img/no-person.jpg" class="img-responsive img-rounded">
+                    <br />
+                    <div>
+                        @if (ViewBag.isFriend)
+                        {
+                            <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-light center-block">Удалить из друзей</a>
+                        }
+                        else
+                        {
+                            if (ViewBag.isApplicant)
+                            {
+                                <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-light center-block">Отменить заявку</a>
+                            }
+                            else if (ViewBag.isAimPerson)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <a href="/Userpage/Confirmfriend?id=@ViewBag.UserId" class="btn btn-success center-block">Принять</a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="/Userpage/Deletefriend?id=@ViewBag.UserId" class="btn btn-danger center-block">Отклонить</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="/Userpage/Addfriend?id=@ViewBag.UserId" class="btn btn-info center-block">Добавить в друзья</a>
+                            }
+                        }
+                        <br />
+                        <a href="#" class="btn btn-info center-block">Написать сообщение</a>
+                    </div>
+                </div>
             </div>
-
+            <div class="col-sm-5">
+                <div class="jumbotron">
+                    <h4><b>@Model.User.LastName @Model.User.FirstName</b></h4>
+                    <p> @Model.User.Email</p>
+                    <p>День рождения: @Model.User.BirthDate.ToString("dd.MM.yyyy")</p>
+                </div>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-8">
+
+                <div class="jumbotron">
+
+                    <h3>Новости</h3>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.News)
+        {
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-8">
+                    <div class="jumbotron">
+
+                        <div>
+                            <h4>
+                                @Html.ActionLink(item.CommunityName, "Community", "Communities", new { ComId = item.CommunityId }, null)
+                            </h4>
+                            <p>
+                                @item.Text
+                            </p>
+                            <div>@Html.ActionLink(item.AuthorFN + " " + item.AuthorLN, "Id", "Userpage", new { id = item.AuthorId }, null)<span class="text-muted"> написал @item.CreationDate</span></div>
+
+                            <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-</div>
 
-<div class="container">
-
-    <h2>Новости</h2>
-
-    @foreach (var item in Model.News)
-    {
-        <div class="row">
-            <div>
-                <hr />
-                <h4>
-                    @Html.ActionLink(item.CommunityName, "Community", "Communities", new { ComId = item.CommunityId }, null)
-                </h4>
-                <p>
-                    @item.Text
-                </p>
-                <div><span class="text-muted">@item.AuthorLN @item.AuthorFN написал @item.CreationDate</span></div>
-
-                <a href="/Posts/Details?id=@item.PostId">Открыть</a>
-            </div>
-        </div>
-    }
 </div>

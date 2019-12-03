@@ -32,7 +32,7 @@ namespace SocialNetwork.Controllers
                         join p in db.Posts on sub.CommunityId equals p.CommunityId
                         join c in db.Communities on sub.CommunityId equals c.CommunityId
                         join r in db.Editors on p.RightsId equals r.EditorRightsId
-                        join u in db.Users on userId equals u.Id
+                        join u in db.Users on r.UserId.ToString() equals u.Id
                         where sub.SubscriptionCancelationDate == null &&
                       sub.UserId == id
                         orderby p.CreationDate descending
@@ -44,7 +44,8 @@ namespace SocialNetwork.Controllers
                             sub.CommunityId,
                             c.Name,
                             u.LastName,
-                            u.FirstName
+                            u.FirstName,
+                            u.Id
                         }).ToList();
 
 
@@ -52,7 +53,7 @@ namespace SocialNetwork.Controllers
 
             foreach (var item in news)
             {
-                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text };
+                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text, AuthorId = Guid.Parse(item.Id) };
                 Page.News.Add(one);
             }
 
@@ -86,7 +87,7 @@ namespace SocialNetwork.Controllers
                         join p in db.Posts on sub.CommunityId equals p.CommunityId
                         join c in db.Communities on sub.CommunityId equals c.CommunityId
                         join r in db.Editors on p.RightsId equals r.EditorRightsId
-                        join u in db.Users on userId equals u.Id
+                        join u in db.Users on r.UserId.ToString() equals u.Id
                         where sub.SubscriptionCancelationDate == null &&
                       sub.UserId == id
                         orderby p.CreationDate descending
@@ -98,7 +99,8 @@ namespace SocialNetwork.Controllers
                             sub.CommunityId,
                             c.Name,
                             u.LastName,
-                            u.FirstName
+                            u.FirstName,
+                            u.Id
                         }).ToList();
 
 
@@ -106,7 +108,7 @@ namespace SocialNetwork.Controllers
 
             foreach (var item in news)
             {
-                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text };
+                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text, AuthorId = Guid.Parse(item.Id) };
                 Page.News.Add(one);
             }
 

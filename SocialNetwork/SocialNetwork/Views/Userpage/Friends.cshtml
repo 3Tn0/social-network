@@ -5,43 +5,46 @@
     ViewBag.Title = "Friends";
 }
 
-<table class="table">
-    <tr>
-        <td><h2><u>@Html.ActionLink("Друзья", "Friends")</u></h2></td>
-        <td><h2>@Html.ActionLink("Заявки", "Applications")</h2></td>
-    </tr>
-</table>
+<div class="container body-start">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="jumbotron">
 
-<form action="Friends" method="post" class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-        <input type="text" name="Filter" class="form-control" placeholder="Найти">
+                <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-4"><h4><u>@Html.ActionLink("Друзья", "Friends")</u></h4></div>
+                    <div class="col-lg-3"><h4>@Html.ActionLink("Заявки", "Applications")</h4></div>
+                </div>
+                <div class="row">
+                    <div>
+                        <form action="Friends" method="post" class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" name="Filter" class="form-control" placeholder="Найти">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-lg-8">@Html.ActionLink(item.FirstName + " " + item.LastName, "Id", new { id = item.Id })</div>
+                        <div class="col-lg-4"><a href="/Userpage/Deletefriendfriends?id=@item.Id" class="btn btn-light">Удалить из друзей</a></div>
+                    </div>
+                }
+
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">
-        <span class="glyphicon glyphicon-search"></span>
-    </button>
-</form>
-
-
-@*<form asp-controller="Movies" asp-action="Index">
-        <p>
-            <input type="text" name="SearchString">
-            <input type="submit" value="Filter" />
-        </p>
-    </form>*@
-
-
-<table class="table">
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", new { id = item.Id })
-            </td>
-            <td>
-                <a href="/Userpage/Deletefriendfriends?id=@item.Id" class="btn btn-light">Удалить из друзей</a>
-            </td>
-        </tr>
-    }
-
-</table>
+</div>

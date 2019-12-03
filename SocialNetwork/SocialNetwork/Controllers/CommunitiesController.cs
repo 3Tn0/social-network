@@ -161,14 +161,15 @@ namespace SocialNetwork.Controllers
                             p.CommunityId,
                             c.Name,
                             u.LastName,
-                            u.FirstName
+                            u.FirstName,
+                            u.Id
                         }).ToList();
 
             CommunityPage.News = new List<PostInfo>();
 
             foreach (var item in news)
             {
-                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text };
+                PostInfo one = new PostInfo { PostId = item.PostId, AuthorFN = item.FirstName, AuthorLN = item.LastName, CommunityId = item.CommunityId, CommunityName = item.Name, CreationDate = item.CreationDate, Text = item.Text, AuthorId = Guid.Parse(item.Id) };
                 CommunityPage.News.Add(one);
             }
 
@@ -392,7 +393,7 @@ namespace SocialNetwork.Controllers
                 db.Editors.Add(Ed);
                 db.SaveChanges();
 
-                return RedirectToAction("Subscribers", "Communities", new { ComId });
+                return RedirectToAction("Editors", "Communities", new { ComId });
 
             }
         }
@@ -411,7 +412,7 @@ namespace SocialNetwork.Controllers
                 db.Entry(Ed).Entity.CancellationDate = DateTime.Now;
                 db.SaveChanges();
 
-                return RedirectToAction("Subscribers", "Communities", new { ComId });
+                return RedirectToAction("Editors", "Communities", new { ComId });
             }
         }
 

@@ -4,19 +4,38 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Удаление</h2>
+<div class="container body-start">
+    <div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-<h3>Вы уверены что хотите удалить это сообщество?</h3>
-<div>
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
-    <hr />
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <h4>Удаление</h4>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+                    <h4>Вы уверены что хотите удалить сообщество <b>@Html.DisplayFor(model => model.Name)</b>?</h4>
+                    <div>
+                        
+                        <hr />
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" />
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Удалить" class="btn btn-default" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+    </div>
 </div>

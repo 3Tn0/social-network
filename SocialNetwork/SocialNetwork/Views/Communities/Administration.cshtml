@@ -5,25 +5,44 @@
     ViewBag.Title = "Administration";
 }
 
-<table class="table">
-    <tr>
-        <td><h2>@Html.ActionLink("Мои подписки", "Subscriptions", new { /* id=item.PrimaryKey */ })</h2></td>
-        <td><h2><u>@Html.ActionLink("Управление", "Administration", new { /* id=item.PrimaryKey */ })</u></h2></td>
-        <td>
-            <h2><a href="All" class="btn btn-default">Все сообщества</a></h2>
-        </td>
-        <td>
-            <h2><a href="Create" class="btn btn-default">Создать сообщество</a></h2>
-        </td>
-    </tr>
-    @foreach (var item in Model.Communities)
-    {
-        <tr>
-            <td><h4>@Html.ActionLink(item.Name, "Community", new { ComId = item.CommunityId })</h4></td>
-        </tr>
-    }
-</table>
-<br />
-<div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("Administration", new { page = x }))
+<div class="container body-start">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="jumbotron">
+
+                <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-sm-3"><h4>@Html.ActionLink("Подписки", "Subscriptions", new { /* id=item.PrimaryKey */ })</h4></div>
+                    <div class="col-sm-4"><h4><u>@Html.ActionLink("Управление", "Administration", new { /* id=item.PrimaryKey */ })</u></h4></div>
+                    <div class="col-sm-2">
+                        <h4><a href="All" class="btn btn-default">Все сообщества</a></h4>
+                    </div>
+                    <div class="col-sm-2">
+                        <h4><a href="Create" class="btn btn-default">Создать сообщество</a></h4>
+                    </div>
+                </div>
+                <hr />
+
+                @foreach (var item in Model.Communities)
+                {
+                    <div class="row">
+                        <div class="col-lg-8"><h4>@Html.ActionLink(item.Name, "Community", new { ComId = item.CommunityId })</h4></div>
+                    </div>
+                }
+
+                <br />
+
+                <div class="btn-group">
+                    @Html.PageLinks(Model.PageInfo, x => Url.Action("Subscriptions", new { page = x }))
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

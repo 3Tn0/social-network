@@ -1,27 +1,46 @@
 ﻿@model IEnumerable<SocialNetwork.Models.Subscriber>
 
 @{
-    ViewBag.Title = "Subscribers";
+    ViewBag.Title = "Editors";
 }
 
-<h2>Подписчики</h2>
+<div class="container body-start">
+    <div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-<table class="table">
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <h4>Редакторы</h4>
+
+                    <table class="table">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.FirstName + " " + item.LastName, "Id", "Userpage", new { id = item.UserId }, null)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(" ", "Deleteeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-remove" })
+                                    <span>Удалить редактора</span>
+                                </td>
+                            </tr>
+                        }
 
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-
-            <td>
-                @Html.ActionLink(" ", "Deleteeditor", new { ComId = ViewBag.ComId, UserId = item.UserId }, new { @class = "glyphicon glyphicon-remove" })
-                <span>Удалить редактора</span>
-            </td>
-        </tr>
-    }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-</table>

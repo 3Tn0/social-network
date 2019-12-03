@@ -4,36 +4,58 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Удаление</h2>
 
-<h3>Вы уверены что хотите удалить эту запись?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Дата создания
-        </dt>
+<div class="container body-start">
+    <div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <h4>Удаление</h4>
 
-        <dt>
-            Текст
-        </dt>
+                    <h4>Вы уверены что хотите удалить эту запись?</h4>
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Дата создания
+                            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Text)
-        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.CreationDate)
+                            </dd>
 
-    </dl>
+                            <dt>
+                                Текст
+                            </dt>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+                            <dd>
+                                @Html.DisplayFor(model => model.Text)
+                            </dd>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" />
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Удалить" class="btn btn-default" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+    </div>
 </div>
+
+

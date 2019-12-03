@@ -15,6 +15,7 @@ namespace SocialNetwork.Models
         public string CommunityName { get; set; }
         public string AuthorFN { get; set; }
         public string AuthorLN { get; set; }
+        public Guid AuthorId { get; set; }
 
     }
 

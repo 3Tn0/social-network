@@ -4,50 +4,71 @@
     ViewBag.Title = "Userpage";
 }
 
-<div class="container">
-    <div class="jumbotron">
+<div class="container body-start">
+    <div>
         <div class="row">
+            <div class="col-sm-3">
+                <div class="jumbotron">
 
-
-
-            <div class="col-sm-6">
-                <p>@Html.ActionLink("Моя страница", "Index")</p>
-                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
-                <p>@Html.ActionLink("Мои сообщения", "#")</p>
-                <p>@Html.ActionLink("Мои друзья", "Friends")</p>
+                    <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                    <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                    <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                    <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+                </div>
             </div>
-
-
-            <div class="col-sm-6">
-                <a href="/Userpage/Edit" class="btn btn-info">Редактировать</a>
-                <h3>@Model.User.LastName @Model.User.FirstName</h3>
-                <p> @Model.User.Email</p>
-                <p>День рождения: @Model.User.BirthDate.ToString("dd.MM.yyyy")</p>
+            <div class="col-sm-3">
+                <div class="jumbotron">
+                    <img src="https://sun9-16.userapi.com/c846217/v846217884/b1520/ugabgnPJK00.jpg" class="img-responsive img-rounded">
+                    <br />
+                    <div><a href="#" class="btn btn-info center-block">Редактировать</a></div>
+                </div>
             </div>
-
+            <div class="col-sm-5">
+                <div class="jumbotron">
+                    <h4><b>@Model.User.LastName @Model.User.FirstName</b></h4>
+                    <p> @Model.User.Email</p>
+                    <p>День рождения: @Model.User.BirthDate.ToString("dd.MM.yyyy")</p>
+                </div>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-8">
+
+                <div class="jumbotron">
+
+                    <h3>Новости</h3>
+                </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.News)
+        {
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-8">
+                    <div class="jumbotron">
+
+                        <div>
+                            <h4>
+                                @Html.ActionLink(item.CommunityName, "Community", "Communities", new { ComId = item.CommunityId }, null)
+                            </h4>
+                            <div>
+                                <p>
+                                    @item.Text
+                                </p>
+                            </div>
+                            <div>@Html.ActionLink(item.AuthorFN + " " + item.AuthorLN, "Id", "Userpage", new { id = item.AuthorId }, null)<span class="text-muted"> написал @item.CreationDate</span></div>
+
+                            <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-</div>
 
-<div class="container">
-
-    <h2>Новости</h2>
-
-    @foreach (var item in Model.News)
-    {
-        <div class="row">
-            <div>
-                <hr />
-                <h4>
-                    @Html.ActionLink(item.CommunityName, "Community", "Communities", new { ComId = item.CommunityId }, null)
-                </h4>
-                <p>
-                    @item.Text
-                </p>
-                <div><span class="text-muted">@item.AuthorLN @item.AuthorFN написал @item.CreationDate</span></div>
-
-                <a href="/Posts/Details?id=@item.PostId">Открыть</a>
-            </div>
-        </div>
-    }
 </div>

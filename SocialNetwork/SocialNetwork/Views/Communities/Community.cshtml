@@ -6,71 +6,105 @@
     ViewBag.Title = "Community";
 }
 
-<div class="container">
+<div class="container body-start">
     <div class="row">
-        <div class="col-sm-6">
-            <h2>
-                @Model.CommunityName
-            </h2>
-        </div>
-        <div class="col-sm-6">
-            @if (Model.isAdmin)
-            {
+        <div class="col-sm-3">
+            <div class="jumbotron">
 
-            <h3>
-                @Html.ActionLink(" ", "Edit", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-pencil" })
-                @Html.ActionLink(" ", "Delete", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-remove" })
-            </h3>
-            }
+                <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h3>
+                            <b>
+                                @Model.CommunityName
+                            </b>
+                        </h3>
+                    </div>
+                    <div class="col-sm-4">
+                        @if (Model.isAdmin)
+                        {
+
+                            <h3>
+                                @Html.ActionLink(" ", "Edit", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-pencil" })
+                                @Html.ActionLink(" ", "Delete", new { id = Model.CommunityId }, new { @class = "glyphicon glyphicon-remove" })
+                            </h3>
+                        }
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <a href="/Communities/Subscribers?ComId=@Model.CommunityId" class="btn btn-info">Подписчики</a>
+
+                    @if (Model.isAdmin)
+                    {
+                        <a href="/Communities/Editors?ComId=@Model.CommunityId" class="btn btn-info">Редакторы</a>
+                    }
+
+
+                    @if (!Model.isSubscriber)
+                    {
+                        <a href="/Communities/Subscribe?ComId=@Model.CommunityId" class="btn btn-success">Подписаться</a>
+                    }
+
+                    @if (Model.isSubscriber)
+                    {
+                        <a href="/Communities/Unsubscribe?ComId=@Model.CommunityId" class="btn btn-light">Отписаться</a>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-8">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-sm-8"><h4>Новости</h4></div>
 
+                    <div class="col-sm-4">
+                        @if (Model.isEditor)
+                        {
+                            <a href="/Posts/Create?ComId=@Model.CommunityId" class="btn btn-default">Добавить запись</a>
+                        }
+                    </div>
+                    </div>
 
-
-
-<a href="/Communities/Subscribers?ComId=@Model.CommunityId" class="btn btn-info">Подписчики</a>
-
-@if (Model.isAdmin)
-{
-<a href="/Communities/Editors?ComId=@Model.CommunityId" class="btn btn-info">Редакторы</a>
-}
-
-
-@if (!Model.isSubscriber)
-{
-<a href="/Communities/Subscribe?ComId=@Model.CommunityId" class="btn btn-success">Подписаться</a>
-}
-
-@if (Model.isSubscriber)
-{
-<a href="/Communities/Unsubscribe?ComId=@Model.CommunityId" class="btn btn-light">Отписаться</a>
-}
-
-<div class="container">
-
-    <h2>Новости</h2>
-
-    @if (Model.isEditor)
-    {
-    <a href="/Posts/Create?ComId=@Model.CommunityId" class="btn btn-default">Добавить запись</a>
-    }
-
+                </div>
+        </div>
+    </div>
     @foreach (var item in Model.News)
     {
-    <div class="row">
-        <div>
-            <hr />
-            <h4>
-                @Html.ActionLink(item.CommunityName, "Community", new { ComId = item.CommunityId })
-            </h4>
-            <p>
-                @item.Text
-            </p>
-            <div><span class="text-muted">@item.AuthorLN @item.AuthorFN написал @item.CreationDate</span></div>
-
-            <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-8">
+                <div class="jumbotron">
+                    <div>
+                        <h4>
+                            @Html.ActionLink(item.CommunityName, "Community", new { ComId = item.CommunityId })
+                        </h4>
+                        <p>
+                            @item.Text
+                        </p>
+                        <div>@Html.ActionLink(item.AuthorFN + " " + item.AuthorLN, "Id", "Userpage", new { id = item.AuthorId }, null)<span class="text-muted"> написал @item.CreationDate</span></div>
+                        <a href="/Posts/Details?id=@item.PostId">Открыть</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     }
 </div>
+
+
+
+
+
+
+
