@@ -51,5 +51,6 @@ namespace SocialNetwork.Models
             return new ApplicationDbContext();
         }
 
+       // public System.Data.Entity.DbSet<SocialNetwork.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

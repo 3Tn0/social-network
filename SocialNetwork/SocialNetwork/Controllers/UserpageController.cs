@@ -57,6 +57,18 @@ namespace SocialNetwork.Controllers
                 Page.News.Add(one);
             }
 
+            string filePath = Server.MapPath(Url.Content("~/Temp/" + userId + ".jpeg"));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                ViewBag.hasPicture = true;
+            }
+            else
+            {
+                ViewBag.hasPicture = false;
+            }
+
+
             return View(Page);
         }
 
@@ -146,7 +158,17 @@ namespace SocialNetwork.Controllers
                 ViewBag.isApplicant = false;
                 ViewBag.isAimPerson = false;
             }
-                
+
+            string filePath = Server.MapPath(Url.Content("~/Temp/" + id + ".jpeg"));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                ViewBag.hasPicture = true;
+            }
+            else
+            {
+                ViewBag.hasPicture = false;
+            }
 
             ViewBag.UserId = id;
 

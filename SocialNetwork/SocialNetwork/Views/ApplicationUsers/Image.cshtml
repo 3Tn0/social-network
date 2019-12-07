@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Image";
+}
+
+
+<div class="container body-start">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="jumbotron">
+
+                <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="jumbotron">
+                <h4>Изменение фотографии</h4>
+                @using (Html.BeginForm("FileUpload", "ApplicationUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="file" name="uploadFile" />
+                    <br />
+                    <input type="submit" class="btn btn-default" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

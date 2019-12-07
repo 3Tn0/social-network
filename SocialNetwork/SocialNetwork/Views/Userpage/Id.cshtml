@@ -18,7 +18,14 @@
             </div>
             <div class="col-sm-3">
                 <div class="jumbotron">
-                    <img src="https://www.stomatolog3.ru/wp-content/themes/stomatologia/img/no-person.jpg" class="img-responsive img-rounded">
+                    @if (ViewBag.hasPicture)
+                    {
+                        <img src="~/Temp/@(Model.User.Id+ ".jpeg")" class="img-responsive img-rounded">
+                    }
+                    else
+                    {
+                        <img src="https://www.stomatolog3.ru/wp-content/themes/stomatologia/img/no-person.jpg" class="img-responsive img-rounded">
+                    }
                     <br />
                     <div>
                         @if (ViewBag.isFriend)

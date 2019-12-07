@@ -1,0 +1,80 @@
+﻿@model SocialNetwork.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="container body-start">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="jumbotron">
+
+                <p>@Html.ActionLink("Моя страница", "Index", "Userpage")</p>
+                <p>@Html.ActionLink("Мои сообщества", "Subscriptions", "Communities")</p>
+                <p>@Html.ActionLink("Мои сообщения", "#")</p>
+                <p>@Html.ActionLink("Мои друзья", "Friends", "Userpage")</p>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="jumbotron">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>Редактирование личной информации</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h4>Фамилия</h4>
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h4>Имя</h4>
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h4>Дата рождения</h4>
+                                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(model => model.RegistrationDate)
+                        @Html.HiddenFor(model => model.Gender)
+                        @Html.HiddenFor(model => model.Email)
+                        @Html.HiddenFor(model => model.EmailConfirmed)
+                        @Html.HiddenFor(model => model.PasswordHash)
+                        @Html.HiddenFor(model => model.SecurityStamp)
+                        @Html.HiddenFor(model => model.PhoneNumber)
+                        @Html.HiddenFor(model => model.PhoneNumberConfirmed)
+                        @Html.HiddenFor(model => model.TwoFactorEnabled)
+                        @Html.HiddenFor(model => model.LockoutEndDateUtc)
+                        @Html.HiddenFor(model => model.LockoutEnabled)
+                        @Html.HiddenFor(model => model.AccessFailedCount)
+                        @Html.HiddenFor(model => model.UserName)
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Сохранить" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
