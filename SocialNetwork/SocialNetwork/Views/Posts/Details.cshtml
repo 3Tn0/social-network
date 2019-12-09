@@ -35,15 +35,15 @@
                             }
                         </div>
                     </div>
-                        
+
                     <p>
                         @Model.Post.Text
                     </p>
                     <div>@Html.ActionLink(Model.Post.AuthorFN + " " + Model.Post.AuthorLN, "Id", "Userpage", new { id = Model.AuthorId }, null)<span class="text-muted"> написал @Model.Post.CreationDate</span></div>
                     <a href="#comment">Прокомментировать</a>
                 </div>
-                    </div>
-                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -59,42 +59,45 @@
             </div>
         </div>
     </div>
+    <div id="results">
+        @foreach (var item in Model.Comments)
+        {
+            <div>
+                <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-8">
 
-    @foreach (var item in Model.Comments)
-    {
-        <div>
-            <div class="row">
-                <div class="col-sm-3">
-                </div>
-                <div class="col-sm-8">
-                    <div class="jumbotron">
+                        <div class="jumbotron">
 
-                        <div class="row">
-                            <div>
-                                <p>
-                                    @item.CommentText
-                                </p>
+                            <div class="row">
                                 <div>
-                                    @*@if (Model.AuthorId == item.UserId)
-                                        {
-                                            @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId }, new { @class = "text-danger" })
-                                            <span class="text-danger">@item.UserLn @item.UserFn</span>
-                                        }
-                                        else
-                                        {
-                                            @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId,}, null)
-                                            <span class="text-muted">@item.UserLn @item.UserFn</span>
-                                        }*@
-                                    @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId, }, null)
-                                    <span class="text-muted"> прокомментировал @item.CommentDate</span>
+                                    <p>
+                                        @item.CommentText
+                                    </p>
+                                    <div>
+                                        @*@if (Model.AuthorId == item.UserId)
+                                            {
+                                                @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId }, new { @class = "text-danger" })
+                                                <span class="text-danger">@item.UserLn @item.UserFn</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId,}, null)
+                                                <span class="text-muted">@item.UserLn @item.UserFn</span>
+                                            }*@
+                                        @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId, }, null)
+                                        <span class="text-muted"> прокомментировал @item.CommentDate</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+
+        }
+    </div>
 
     <div>
         <div class="row">
@@ -102,31 +105,33 @@
             </div>
             <div class="col-sm-8">
                 <div class="jumbotron">
-                    @using (Html.BeginForm())
+                    @using (Ajax.BeginForm("News", new AjaxOptions { UpdateTargetId = "results" }))
                     {
                         @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
-                            <h4>Добавить комментарий</h4>
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-horizontal">
+                        <h4>Добавить комментарий</h4>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.comment.Text, "Введите текст", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.comment.Text, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.comment.Text, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <a name="comment"></a>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Добавить" class="btn btn-default" />
-                                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.comment.Text, "Введите текст", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.comment.Text, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.comment.Text, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <a name="comment"></a>
+                        <input name="postId" value="@Model.Post.PostId" type="hidden" />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Добавить" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
         </div>
     </div>
+
 </div>

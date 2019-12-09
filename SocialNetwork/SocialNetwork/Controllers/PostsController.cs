@@ -104,10 +104,12 @@ namespace SocialNetwork.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details([Bind(Include = "CommentId,CommentDate,Text")] Comment comment, Guid id)
+        public ActionResult News([Bind(Include = "CommentId,CommentDate,Text")] Comment comment, string postId)
         {
+            var id = Guid.Parse(postId);
             if (ModelState.IsValid)
             {
+                
                 comment.CommentId = Guid.NewGuid();
                 comment.CommentDate = DateTime.Now;
                 comment.PostId = id;
@@ -115,11 +117,109 @@ namespace SocialNetwork.Controllers
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Posts", new { id });
+
+
+
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Post post = db.Posts.Find(id);
+
+                PostDetailViewModel FullPost = new PostDetailViewModel();
+
+                var postinf = (from p in db.Posts
+                               join e in db.Editors on p.RightsId equals e.EditorRightsId
+                               join u in db.Users on e.UserId.ToString() equals u.Id
+                               join c in db.Communities on p.CommunityId equals c.CommunityId
+                               where p.PostId == id
+                               select new
+                               {
+                                   u.FirstName,
+                                   u.LastName,
+                                   c.Name,
+                                   u.Id
+                               }).First();
+
+                FullPost.AuthorId = Guid.Parse(postinf.Id);
+
+                FullPost.Post = new PostInfo { PostId = post.PostId, Text = post.Text, CommunityId = post.CommunityId, CreationDate = post.CreationDate, AuthorFN = postinf.FirstName, AuthorLN = postinf.LastName, CommunityName = postinf.Name };
+
+
+                var comments = (from p in db.Posts
+                                join com in db.Comments on p.PostId equals com.PostId
+                                join u in db.Users on com.UserId.ToString() equals u.Id
+                                where p.PostId == id
+                                orderby com.CommentDate descending
+                                select new
+                                {
+                                    com.CommentId,
+                                    com.CommentDate,
+                                    com.Text,
+                                    u.LastName,
+                                    u.FirstName,
+                                    u.Id
+                                }).ToList();
+
+                FullPost.Comments = new List<CommentInfo>();
+
+                foreach (var item in comments)
+                {
+                    CommentInfo commentariy = new CommentInfo { CommentDate = item.CommentDate, CommentId = item.CommentId, CommentText = item.Text, UserFn = item.FirstName, UserLn = item.LastName, UserId = Guid.Parse(item.Id) };
+                    FullPost.Comments.Add(commentariy);
+                }
+
+
+                var userId = User.Identity.GetUserId();
+
+                FullPost.isAuthor = false;
+
+                if (postinf.Id == userId)
+                {
+                    FullPost.isAuthor = true;
+                }
+
+                FullPost.isAdmin = false;
+
+                var Admin = (from c in db.Communities
+                             where c.CommunityId == post.CommunityId
+                             select new { id = c.UserId }).First();
+
+                if (userId == Admin.id.ToString())
+                {
+                    FullPost.isAdmin = true;
+                }
+
+
+                if (post == null)
+                {
+                    return HttpNotFound();
+                }
+                return PartialView(FullPost);
             }
 
             return RedirectToAction("Details", "Posts", new { id });
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Details([Bind(Include = "CommentId,CommentDate,Text")] Comment comment, Guid id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        comment.CommentId = Guid.NewGuid();
+        //        comment.CommentDate = DateTime.Now;
+        //        comment.PostId = id;
+        //        comment.UserId = Guid.Parse(User.Identity.GetUserId());
+
+        //        db.Comments.Add(comment);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Details", "Posts", new { id });
+        //    }
+
+        //    return RedirectToAction("Details", "Posts", new { id });
+        //}
 
         // GET: Posts/Create
         public ActionResult Create(Guid ComId)

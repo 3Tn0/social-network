@@ -1,0 +1,40 @@
+﻿@model SocialNetwork.Models.PostDetailViewModel
+
+<div>
+    @foreach (var item in Model.Comments)
+    {
+        <div>
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-8">
+                    <div class="jumbotron">
+
+                        <div class="row">
+                            <div>
+                                <p>
+                                    @item.CommentText
+                                </p>
+                                <div>
+                                    @*@if (Model.AuthorId == item.UserId)
+                                        {
+                                            @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId }, new { @class = "text-danger" })
+                                            <span class="text-danger">@item.UserLn @item.UserFn</span>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId,}, null)
+                                            <span class="text-muted">@item.UserLn @item.UserFn</span>
+                                        }*@
+                                    @Html.ActionLink(item.UserFn + " " + item.UserLn, "Id", "Userpage", new { id = item.UserId, }, null)
+                                    <span class="text-muted"> прокомментировал @item.CommentDate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
